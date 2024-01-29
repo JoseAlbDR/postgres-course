@@ -12,6 +12,15 @@ FROM
     users
 WHERE
     last_connection LIKE '221.%.%.%';
-
+    
 -- Nombre, apellido y seguidores(followers) de todos a los que lo siguen más de 4600 personas
-SELECT first_name, last_name, followers FROM users WHERE followers > 4600 ORDER BY followers DESC;
+SELECT
+    first_name,
+    last_name,
+    followers
+FROM
+    users
+WHERE
+    followers > 4600
+ORDER BY
+    followers DESC;
