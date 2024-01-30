@@ -13,6 +13,7 @@ add
         )
     );
 
+ALTER TABLE city ADD PRIMARY KEY(id);
 
 alter table
     country
