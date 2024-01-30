@@ -16,7 +16,6 @@ SELECT COUNT(*), country FROM users GROUP BY country;
 
 -- 4. Listado de direcciones IP de todos los usuarios de Iceland
 -- Campos requeridos first_name, last_name, country, last_connection
-
 SELECT
     first_name,
     last_name,
@@ -38,24 +37,9 @@ HAVING
 SELECT
     COUNT(*)
 from
-    (
-        SELECT
-            first_name,
-            last_name,
-            country,
-            last_connection
-        FROM
-            users
-        GROUP BY
-            last_connection,
-            first_name,
-            last_name,
-            country
-        HAVING
-            country = 'Iceland'
-    ) as ip_table
+    users
 WHERE
-    last_connection LIKE '112.%';
+    last_connection LIKE '112.%' AND country = 'Iceland';
     
 -- 6. Listado de usuarios de Iceland, tienen dirección IP
 -- que inicia en 112 ó 28 ó 188
@@ -115,17 +99,8 @@ SELECT
     COUNT(*) as persons,
     country
 FROM
-    (
-        SELECT
-            *
-        FROM
-            users
-        WHERE
-            country IN ('Mexico', 'Honduras', 'Costa Rica')
-        ORDER BY
-            country ASC,
-            first_name ASC,
-            last_name ASC
-    )
+    users
+WHERE
+	country in ('Mexico', 'Honduras', 'Costa Rica')
 GROUP BY country
 ORDER BY country ASC;
