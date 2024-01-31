@@ -48,3 +48,45 @@ limit
     1;
 
 
+-- Quiero saber los idiomas oficiales que se hablan por continente
+
+select * from continent;
+
+select * from country;
+
+select * from countrylanguage where isofficial = true;
+
+select
+	DISTINCT
+	c.name as continent,
+	 d.name as language,
+    count(a.*) as total
+from
+    country a
+    inner join countrylanguage b on a.code = b.countrycode
+    inner join continent c on a.continent = c.code
+    inner join language d on d.code = b.languagecode
+where
+    b.isofficial = true
+group by
+    b.language,
+    d.name,
+    c.name
+order by
+    c.name asc;
+
+select
+	DISTINCT
+	count(b.languagecode) as total,
+	 c.name as continent
+from
+    country a
+    inner join countrylanguage b on a.code = b.countrycode
+    inner join continent c on a.continent = c.code
+where
+    b.isofficial = true
+group by
+    c.name;
+  
+
+
