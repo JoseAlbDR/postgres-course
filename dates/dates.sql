@@ -51,4 +51,15 @@ update
 set
     hire_date = hire_date + MAKE_INTERVAL(YEARS := 24);
 
-
+select
+    first_name,
+    last_name,
+    hire_date,
+    CASE
+        when hire_date > now() - INTERVAL '1 year' then 'Newbie'
+        when hire_date > now() - INTERVAL '5 years' then 'Rookie'
+        else 'Veteran'
+    END as rango_antiguedad
+from
+    employees
+order by hire_date desc;
