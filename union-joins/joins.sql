@@ -19,3 +19,27 @@ from
     outer join continent b on a.continent = b.code
 order by
     a.name desc;
+
+-- Continentes que no tienen registros en la tabla country, 
+-- se puede usar para ver provincias que no tienen registros en la tabla users
+select
+    a.name,
+    a.continent as continentCode,
+    b.name as continentName
+from
+    country a
+    right join continent b on a.continent = b.code
+    where a.name is null or a.continent is null
+order by
+    a.name desc;
+
+-- Listado de todos los continentes con cantidad de paises por continente
+select
+    count(a.code),
+    b.name
+from
+    country a
+    right join continent b on a.continent = b.code
+group by
+    b.name
+order by count(*) asc;
