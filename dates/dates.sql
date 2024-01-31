@@ -35,3 +35,20 @@ select
     max(hire_date) + MAKE_INTERVAL( YEARS:= 23)
 from
     employees;
+    
+-- Fecha de contratacion y diferencia hasta eeste año (antiguedad)
+select
+    hire_date,
+    MAKE_INTERVAL( YEARS := date_part('years', now())::integer - EXTRACT( YEARS from hire_date)::integer)
+from
+    employees
+order by hire_date desc;
+
+
+-- Sumar 24 años a todos los hire_date
+update
+    employees
+set
+    hire_date = hire_date + MAKE_INTERVAL(YEARS := 24);
+
+
