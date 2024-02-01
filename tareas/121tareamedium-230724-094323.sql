@@ -167,7 +167,10 @@ order by comment_id;
 */
 
 
-select json_agg( JSON_BUILD_OBJECT('user', user_id, 'comment', content))
+select
+    json_agg(
+        JSON_BUILD_OBJECT('user', user_id, 'comment', content)
+    )
 from
     comments
 where
@@ -198,6 +201,35 @@ where
 order by
     a.comment_id asc;
     
+create or replace function comment_replies(id integer)
+returns json 
+as 
+$$ 
+declare result json;
+begin
+select
+    json_agg(
+        JSON_BUILD_OBJECT('user', user_id, 'comment', content)
+    ) into result
+from
+    comments
+where
+    comment_parent_id = id;
     
-    
-    
+    return result;
+end;
+$$ language plpgsql;
+
+
+select comment_replies(2);
+
+
+select
+    *,
+   	comment_replies(post_id)
+from
+    comments 
+where
+    comment_parent_id is null
+order by
+    comment_id asc;
